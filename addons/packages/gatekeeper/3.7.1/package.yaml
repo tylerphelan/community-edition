@@ -1,0 +1,35 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: gatekeeper.community.tanzu.vmware.com.3.7.1
+spec:
+  refName: gatekeeper.community.tanzu.vmware.com
+  version: 3.7.1
+  releaseNotes: "gatekeeper 3.7.1 https://github.com/open-policy-agent/gatekeeper/releases/tag/v3.7.1"
+  valuesSchema:
+    openAPIv3:
+      title: gatekeeper.community.tanzu.vmware.com.3.7.1 values schema
+      properties:
+        namespace:
+          type: string
+          description: The namespace in which to deploy gatekeeper.
+          default: gatekeeper-system
+          examples:
+            - custom-namespace
+  licenses:
+    - "Apache 2.0"
+  template:
+    spec:
+      fetch:
+        - imgpkgBundle:
+            image: projects.registry.vmware.com/tce/gatekeeper@sha256:066167d149d91df1c8d4542c374fee4bc89f6a36361ed82daac89dc833af428a
+      template:
+        - ytt:
+            paths:
+              - config/
+        - kbld:
+            paths:
+              - "-"
+              - .imgpkg/images.yml
+      deploy:
+        - kapp: {}
