@@ -71,7 +71,7 @@ Currently, the kpack dependencies package will not immediately fail if the insta
 
 If your installation is reconciling for a long time or receives a timeout, check the status of the relevant resources:
 
-```
+```bash
 kubectl describe clusterstore
 kubectl describe clusterstack
 kubectl describe clusterbuilder
